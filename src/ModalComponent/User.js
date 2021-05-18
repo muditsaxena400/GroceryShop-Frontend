@@ -11,6 +11,9 @@ class User
     AppUser appUser;
     constructor(id, firstName, lastName, loginId, mobileNo, email, question, answer, appUser)
     {
+        this.id =id;
+        this.firstName = firstName;
+        this.lastName = lastName;
 
     }
 
