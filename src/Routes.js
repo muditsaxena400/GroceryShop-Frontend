@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import AddProduct from "./Components/AddProduct";
 
 //import App from "./App";
 //import Home from "./components/Home";
@@ -14,7 +15,7 @@ const Routes = () => {
       <Switch>
         
         <Route path="/grocery/login" component={SignIn} />
-        
+        <Route path="/admin/product/add" component={AddProduct} />
       </Switch>
     </BrowserRouter>
   );

@@ -13,17 +13,18 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 //import BossContainer from "../BossContainer";
 import { Link } from "react-router-dom";
-
-import { signin } from '../Service/SignInService'
+import Product from '../ModalComponent/Product'
+import { addProduct } from '../Service/AddProductService'
 //import User from "../../Models/User";
 
-class SignIn extends Component {
+class AddProduct extends Component {
 
   initialState = {
-    email: "",
-    password: "",
-    role: "customer",
- 
+    productName: "",
+    productDescription: '',
+    productPrice: 0,
+    productCategory: '',
+    productQuantity: 0
   };
 
   state = { ...this.initialState };
@@ -43,7 +44,16 @@ class SignIn extends Component {
     // );
    // SignInService sign = new SignInService();
 
-   signin(this.state.email, this.state.password)
+   const product = new Product(
+       this.state.productName,
+       this.state.productPrice,
+       this.state.productQuantity,
+       this.state.productDescription,
+       this.state.productCategory
+   )
+
+
+   addProduct(product)
     .then((res) =>{
         this.setState({...this.initialState});
         console.log(res)
@@ -52,11 +62,11 @@ class SignIn extends Component {
 
     })
 
-    this.setState({ ...this.initialState });
+   // this.setState({ ...this.initialState });
   };
 
   render() {
-    const { email, password } = this.state;
+    const { productName,productDescription, productPrice, productQuantity, productCategory } = this.state;
     // console.log(this.props);
     return (
       <Container component="main" maxWidth="xs">
@@ -66,7 +76,7 @@ class SignIn extends Component {
             
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Add product
           </Typography>
           <form className="" noValidate onSubmit={this.handleSubmit}>
             <Grid container spacing={2}>
@@ -74,12 +84,13 @@ class SignIn extends Component {
                 <TextField
                   variant="outlined"
                   required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                 // autoComplete="email"
-                  value={email}
+                  
+                  id="name"
+                  label="Product name"
+                  name="productName"
+                  type="text"
+                  autoComplete="name"
+                  value={productName}
                   onChange={this.handleChange}
                 />
               </Grid>
@@ -87,13 +98,55 @@ class SignIn extends Component {
                 <TextField
                   variant="outlined"
                   required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
+                  
+                  name="productDescription"
+                  label="description"
+                  type="text"
                   id="password"
-                 // autoComplete="current-password"
-                  value={password}
+                  autoComplete="description"
+                  value={productDescription}
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  
+                  name="productQuantity"
+                  label="Quantity"
+                  type="number"
+                  id="quantity"
+                  //autoComplete="description"
+                  value={productQuantity}
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  
+                  name="productPrice"
+                  label="Price"
+                  type="number"
+                  id="price"
+                  autoComplete="price"
+                  value={productPrice}
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  
+                  name="productCategory"
+                  label="Category"
+                  type="text"
+                  id="category"
+                  autoComplete="category"
+                  value={productCategory}
                   onChange={this.handleChange}
                 />
               </Grid>
@@ -106,11 +159,11 @@ class SignIn extends Component {
               className=""
               size="large"
             >
-              Sign Up
+              Add
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link to="/grocery/login" variant="body2">
+                <Link to="/admin/product/add" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -122,16 +175,4 @@ class SignIn extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     signUpForm: { ...state },
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     signUp: (user) => dispatch(signin(this.email,this.password)),
-//   };
-// };
-
-export default SignIn;
+export default AddProduct;
