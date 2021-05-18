@@ -14,6 +14,8 @@ class User
         this.id =id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.loginId = loginId;
+        this.mobileNo = mobileNo;
 
     }
 
