@@ -14,7 +14,6 @@ import Container from "@material-ui/core/Container";
 //import BossContainer from "../BossContainer";
 import { Link } from "react-router-dom";
 
-import { connect } from "react-redux";
 import { signin } from '../Service/SignInService'
 //import User from "../../Models/User";
 
