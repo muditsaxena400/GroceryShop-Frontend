@@ -1,7 +1,7 @@
 import axios from "axios"
 
-export const signin = (email,password) =>{
-        return axios.get(`http://localhost:8086/GroceryApp/grocery/login/${email}/${password}`)
+export const viewAllBookingHistory = () =>{
+        return axios.get(`http://localhost:8086/GroceryApp/admin/customer/all-booking-history`)
         .then((res) => {
             return res.data
         })

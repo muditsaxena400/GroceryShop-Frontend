@@ -1,7 +1,7 @@
 import axios from "axios"
 
-export const signin = (email,password) =>{
-        return axios.get(`http://localhost:8086/GroceryApp/grocery/login/${email}/${password}`)
+export const deleteProduct = (pId) =>{
+        axios.delete(`http://localhost:8086/GroceryApp/admin/product/delete/${pId}`)
         .then((res) => {
             return res.data
         })
@@ -9,4 +9,3 @@ export const signin = (email,password) =>{
             throw new Error(err.response.data.message)
         })
     }
-

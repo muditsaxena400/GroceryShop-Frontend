@@ -1,13 +1,7 @@
 import axios from "axios"
-import BACKEND_URL from "../MainUrl"
-
 export const addProduct = (product) =>{
-        return axios.post(`https://cors-anywhere.herokuapp.com/${BACKEND_URL}/admin/product/add}`, product, {
-           /* headers: {
-                "access-control-allow-origin" : "*",
-                "Content-type": "application/json; charset=UTF-8"
-              }*/
-        })
+    console.log(product)
+        return axios.post(`http://localhost:8086/GroceryApp/admin/product/add`, product)
         .then((res) => {
             return res.data
         })

@@ -1,0 +1,18 @@
+.cardStyle {  
+    width: 25%;
+    display: inline-block;
+   
+    margin-left: 70px;
+    margin-bottom: 40px;
+}
+
+.divStyler {
+    height: 100px;
+}
+
+.buttonPad {
+    
+    margin-right: 200px;
+    bottom: 10px;
+ 
+}

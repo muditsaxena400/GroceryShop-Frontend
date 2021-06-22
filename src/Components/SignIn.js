@@ -1,29 +1,55 @@
 import React, { Component } from "react";
-import Avatar from "@material-ui/core/Avatar";
+import { Link, withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-//import FormControlLabel from "@material-ui/core/FormControlLabel";
-//import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
-//import Box from "@material-ui/core/Box";
-//import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-//import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-//import BossContainer from "../BossContainer";
-import { Link } from "react-router-dom";
-
 import { signin } from '../Service/SignInService'
-//import User from "../../Models/User";
+import { withStyles } from "@material-ui/core/styles";
 
+const styles = (theme) => ({
+  paper: {
+    marginTop: theme.spacing(0),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main, 
+  },
+  form: {
+    width: "30%",
+    marginTop: 20,
+    marginLeft: 10,
+
+  },
+  linkColour: {
+    color: 'blue'
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  TextField:
+  {
+    backgroundColor: 'white',
+  },
+  Typography:
+  {
+      paddingTop: 50,
+  },
+  colour: {
+    color: 'red'
+  },
+
+});
 class SignIn extends Component {
 
   initialState = {
-    email: "",
+    loginId: "",
     password: "",
     role: "customer",
- 
+    
   };
 
   state = { ...this.initialState };
@@ -34,104 +60,115 @@ class SignIn extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    //console.log(this.state);
-
-    // const user = new User(
-    //   this.state.email,
-    //   this.state.password,
-    //   this.state.role
-    // );
-   // SignInService sign = new SignInService();
-
-   signin(this.state.email, this.state.password)
+   
+   signin(this.state.loginId, this.state.password)
     .then((res) =>{
         this.setState({...this.initialState});
         console.log(res)
-    })
-    .catch((err) => {
+        var cart = []
+         localStorage.setItem("id", res.userId);
+         localStorage.setItem("loginId", res.loginId);
+         localStorage.setItem("firstName", res.firstName);
+         localStorage.setItem("lastName", res.lastName);
+         localStorage.setItem("role", res.appUser.userType);
+         localStorage.setItem("mobileNo", res.mobileNo);
+         localStorage.setItem("email", res.email);
+         localStorage.setItem("cart", JSON.stringify(cart))
 
+         if(localStorage.getItem("role") === "Customer")
+         {
+          this.props.history.push("/customer/product/view/all")
+         }
+         else
+         {
+          this.props.history.push("/Admin/Home");
+         }
+         
+         
+    }) 
+    .catch((err) => {
+      const error= err.message.substring(
+        err.message.indexOf("=") + 1,
+        err.message.indexOf("]"));
+        this.setState({errorMsg: error})
     })
 
     this.setState({ ...this.initialState });
   };
 
   render() {
-    const { email, password } = this.state;
-    // console.log(this.props);
+    const { loginId, password } = this.state;
+    const classes  = this.props.classes;
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className="">
-          <Avatar className="">
-            
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
+        <div className = {classes.paper}
+     
+          style = {{
+            backgroundImage:
+                "url(https://image.freepik.com/free-photo/healthy-lunch-go-packed-lunch-box_1220-4541.jpg)",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                height: "100vh",
+                opacity: 0.9, 
+          }}
+        >
+          <Typography component="h1" variant="h1" align = "center" color = "default">
+            Sign In
           </Typography>
-          <form className="" noValidate onSubmit={this.handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
+          <form className = {classes.form} noValidate onSubmit={this.handleSubmit}>
                 <TextField
                   variant="outlined"
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                 // autoComplete="email"
-                  value={email}
+                  className = {classes.TextField}
+                  margin = "normal"
+                  id="loginId"
+                  label="loginId"
+                  name="loginId"
+                  value={loginId}
                   onChange={this.handleChange}
                 />
-              </Grid>
-              <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   required
                   fullWidth
+                  className = {classes.TextField}
                   name="password"
                   label="Password"
                   type="password"
                   id="password"
-                 // autoComplete="current-password"
                   value={password}
                   onChange={this.handleChange}
                 />
-              </Grid>
-            </Grid>
+            <p className={classes.colour}>{this.state.errorMsg !== "" ? this.state.errorMsg : null}</p>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              className=""
-              size="large"
-            >
-              Sign Up
+              className= {classes.submit}
+              size="large">
+                
+               Sign In
             </Button>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link to="/grocery/login" variant="body2">
-                  Already have an account? Sign in
+            <Grid container>
+              <Grid item  justify="flex-start">
+                <Link to="/grocery/forgot/password" variant="body2" color = "secondary">
+                <Typography className={classes.linkColour}>
+                  Forgot password
+                  </Typography>
+                </Link><br/>
+                <Link to="/grocery/register" variant="body2" color = "secondary">
+                <Typography className={classes.linkColour}>
+                  New User? Create an Account.
+                  </Typography>
                 </Link>
               </Grid>
             </Grid>
           </form>
         </div>
-      </Container>
     );
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     signUpForm: { ...state },
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     signUp: (user) => dispatch(signin(this.email,this.password)),
-//   };
-// };
-
-export default SignIn;
+export default withRouter(withStyles(styles)(SignIn));

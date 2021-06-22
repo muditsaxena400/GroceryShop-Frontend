@@ -1,11 +1,13 @@
 class Product{
 
-    constructor(productName, productDescription, productQuantity, productPrice, productCategory) {
-        this.productName= productName
-        this.productDescription= productDescription
-        this.productQuantity= productQuantity
-        this.productPrice= productPrice
-        this.productCategory= productCategory
+    constructor(productId,name, description, quantity, price, category, imgUrl) {
+        this.productId= productId
+        this.name= name
+        this.description= description
+        this.quantity= quantity
+        this.price= price
+        this.category= category
+        this.imgUrl = imgUrl
     }
 }
 

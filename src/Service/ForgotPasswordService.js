@@ -1,7 +1,7 @@
 import axios from "axios"
 
-export const signin = (email,password) =>{
-        return axios.get(`http://localhost:8086/GroceryApp/grocery/login/${email}/${password}`)
+export const forgotPassword = (loginId, answer, newPassword) =>{
+        return axios.put(`http://localhost:8086/GroceryApp/grocery/forgot-password/${loginId}/${answer}/${newPassword}`)
         .then((res) => {
             return res.data
         })

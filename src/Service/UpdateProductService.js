@@ -1,7 +1,7 @@
 import axios from "axios"
 
-export const signin = (email,password) =>{
-        return axios.get(`http://localhost:8086/GroceryApp/grocery/login/${email}/${password}`)
+export const updateProduct = (product) =>{
+        return axios.put(`http://localhost:8086/GroceryApp/admin/product/update`, product)
         .then((res) => {
             return res.data
         })
@@ -9,4 +9,3 @@ export const signin = (email,password) =>{
             throw new Error(err.response.data.message)
         })
     }
-
